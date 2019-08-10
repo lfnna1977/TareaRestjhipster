@@ -1,0 +1,44 @@
+// Author: Luis Fernando Numa Navarro Arias
+// Email: lfnna1977@gmail.com
+
+DEFAULT_MIN_LENGTH = 1
+DEFAULT_MAX_LENGTH = 60
+
+enum Gender {
+    MALE, FEMALE
+}
+
+entity Country {
+	code String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+	name String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+}
+
+entity Player {
+	ci String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+	name String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+    gender Gender required
+    position String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+    aditionalData String
+}
+
+entity Club {
+	name String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+    city String  minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+    telephone String  minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+    numSocios  Integer
+}
+
+// Relations
+
+relationship OneToMany {
+	Country{player} to Player{country(name) required}
+	Club{player} to Player{club(name) required}
+}
+
+
+
+// Set pagination options
+paginate Player with pagination
+
+// Set service options to all except few
+service all with serviceImpl

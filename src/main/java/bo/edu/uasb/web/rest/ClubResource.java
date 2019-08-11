@@ -80,6 +80,28 @@ public class ClubResource {
     }
 
     /**
+     * {@code PATCH  /clubs/:id} : Updates an existing club.
+     *
+     * @param club the club to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated club,
+     * or with status {@code 400 (Bad Request)} if the club is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the club couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping("/clubs/{id}")
+    public ResponseEntity<Club> partialUpdateClub(@PathVariable Long id, @Valid @RequestBody Club club) throws URISyntaxException {
+        log.debug("REST request to update Club : {}", club);
+        if (id == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Club result = clubService.partialSave(club);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, club.getId().toString()))
+            .body(result);
+    }
+
+    
+    /**
      * {@code GET  /clubs} : get all the clubs.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clubs in body.

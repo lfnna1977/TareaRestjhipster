@@ -40,4 +40,12 @@ public interface ClubService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+    /**
+     * Save a club.
+     *
+     * @param club the entity to save.
+     * @return the persisted entity.
+     */
+    Club partialSave(Club club);
 }

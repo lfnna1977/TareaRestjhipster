@@ -75,4 +75,32 @@ public class ClubServiceImpl implements ClubService {
         log.debug("Request to delete Club : {}", id);
         clubRepository.deleteById(id);
     }
+    
+    /**
+     * Save a club.
+     *
+     * @param club the entity to save.
+     * @return the persisted entity.
+     */
+    @Override
+    public Club partialSave(Club partialClub) {
+        log.debug("Request to save Club : {}", partialClub);
+        
+        Optional<Club> club = clubRepository.findById(partialClub.getId());
+
+        if (partialClub.getName() == null) {
+        	partialClub.setName(club.get().getName());
+        }
+        if (partialClub.getCity() == null) {
+        	partialClub.setCity(club.get().getCity());
+        }
+        if (partialClub.getTelephone() == null) {
+        	partialClub.setTelephone(club.get().getTelephone());
+        }
+        if (partialClub.getNumSocios() == null) {
+        	partialClub.setNumSocios(club.get().getNumSocios());
+        }
+        
+        return clubRepository.save(partialClub);
+    }
 }

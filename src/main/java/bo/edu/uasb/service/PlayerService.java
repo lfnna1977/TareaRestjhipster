@@ -43,4 +43,12 @@ public interface PlayerService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+    /**
+     * Save a player.
+     *
+     * @param player the entity to save.
+     * @return the persisted entity.
+     */
+    Player partialSave(Player player);
 }

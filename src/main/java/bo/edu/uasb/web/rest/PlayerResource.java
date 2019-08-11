@@ -87,6 +87,28 @@ public class PlayerResource {
     }
 
     /**
+     * {@code PATCH  /players/:id} : Updates an existing player.
+     *
+     * @param player the player to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated player,
+     * or with status {@code 400 (Bad Request)} if the player is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the player couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping("/players/{id}")
+    public ResponseEntity<Player> partialUpdatePlayer(@PathVariable Long id, @Valid @RequestBody Player player) throws URISyntaxException {
+        log.debug("REST request to update Player : {}", player);
+        if (id == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Player result = playerService.partialSave(player);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, player.getId().toString()))
+            .body(result);
+    }
+
+    
+    /**
      * {@code GET  /players} : get all the players.
      *
      * @param pageable the pagination information.

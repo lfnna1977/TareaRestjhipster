@@ -77,4 +77,40 @@ public class PlayerServiceImpl implements PlayerService {
         log.debug("Request to delete Player : {}", id);
         playerRepository.deleteById(id);
     }
+    
+    /**
+     * Save a player.
+     *
+     * @param player the entity to save.
+     * @return the persisted entity.
+     */
+    @Override
+    public Player partialSave(Player partialPlayer) {
+        log.debug("Request to save Player : {}", partialPlayer);
+        
+        Optional<Player> player = playerRepository.findById(partialPlayer.getId());
+        if (partialPlayer.getCi() == null) {
+        	partialPlayer.setCi(player.get().getCi());
+        }
+        if (partialPlayer.getName() == null) {
+        	partialPlayer.setName(player.get().getName());
+        }
+        if (partialPlayer.getGender() == null) {
+        	partialPlayer.setGender(player.get().getGender());
+        }
+        if (partialPlayer.getPosition() == null) {
+        	partialPlayer.setPosition(player.get().getPosition());
+        }
+        if (partialPlayer.getAditionalData() == null) {
+        	partialPlayer.setAditionalData(player.get().getAditionalData());
+        }
+        if (partialPlayer.getCountry() == null) {
+        	partialPlayer.setCountry(player.get().getCountry());
+        }
+        if (partialPlayer.getClub() == null) {
+        	partialPlayer.setClub(player.get().getClub());
+        }        
+
+        return playerRepository.save(partialPlayer);
+    }
 }

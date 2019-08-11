@@ -67,10 +67,10 @@ public class ClubResource {
      * or with status {@code 500 (Internal Server Error)} if the club couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/clubs")
-    public ResponseEntity<Club> updateClub(@Valid @RequestBody Club club) throws URISyntaxException {
+    @PutMapping("/clubs/{id}")
+    public ResponseEntity<Club> updateClub(@PathVariable Long id, @Valid @RequestBody Club club) throws URISyntaxException {
         log.debug("REST request to update Club : {}", club);
-        if (club.getId() == null) {
+        if (id == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Club result = clubService.save(club);

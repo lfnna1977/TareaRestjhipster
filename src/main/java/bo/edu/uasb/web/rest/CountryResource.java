@@ -67,10 +67,10 @@ public class CountryResource {
      * or with status {@code 500 (Internal Server Error)} if the country couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/countries")
-    public ResponseEntity<Country> updateCountry(@Valid @RequestBody Country country) throws URISyntaxException {
+    @PutMapping("/countries/{id}")
+    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @Valid @RequestBody Country country) throws URISyntaxException {
         log.debug("REST request to update Country : {}", country);
-        if (country.getId() == null) {
+        if (id == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Country result = countryService.save(country);

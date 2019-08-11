@@ -74,10 +74,10 @@ public class PlayerResource {
      * or with status {@code 500 (Internal Server Error)} if the player couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/players")
-    public ResponseEntity<Player> updatePlayer(@Valid @RequestBody Player player) throws URISyntaxException {
+    @PutMapping("/players/{id}")
+    public ResponseEntity<Player> updatePlayer(@PathVariable Long id, @Valid @RequestBody Player player) throws URISyntaxException {
         log.debug("REST request to update Player : {}", player);
-        if (player.getId() == null) {
+        if (id == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Player result = playerService.save(player);

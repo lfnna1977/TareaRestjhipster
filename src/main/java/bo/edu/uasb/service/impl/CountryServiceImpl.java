@@ -75,4 +75,25 @@ public class CountryServiceImpl implements CountryService {
         log.debug("Request to delete Country : {}", id);
         countryRepository.deleteById(id);
     }
+    
+    /**
+     * Save a country.
+     *
+     * @param country the entity to save.
+     * @return the persisted entity.
+     */
+    @Override
+    public Country partialSave(Country partialCountry) {
+        log.debug("Request to save Country : {}", partialCountry);
+        
+        Optional<Country> country = countryRepository.findById(partialCountry.getId());
+        if (partialCountry.getCode() == null) {
+        	partialCountry.setCode(country.get().getCode());
+        }
+        if (partialCountry.getName() == null) {
+        	partialCountry.setName(country.get().getName());
+        }
+        
+        return countryRepository.save(partialCountry);
+    }
 }

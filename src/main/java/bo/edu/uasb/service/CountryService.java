@@ -40,4 +40,12 @@ public interface CountryService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    
+    /**
+     * Save a country.
+     *
+     * @param country the entity to save.
+     * @return the persisted entity.
+     */
+    Country partialSave(Country country);
 }

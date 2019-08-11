@@ -80,6 +80,28 @@ public class CountryResource {
     }
 
     /**
+     * {@code PATCH  /countries/:id} : Updates an existing country.
+     *
+     * @param country the country to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated country,
+     * or with status {@code 400 (Bad Request)} if the country is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the country couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping("/countries/{id}")
+    public ResponseEntity<Country> partialUpdateCountry(@PathVariable Long id, @Valid @RequestBody Country country) throws URISyntaxException {
+        log.debug("REST request to update Country : {}", country);
+        if (id == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Country result = countryService.partialSave(country);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, country.getId().toString()))
+            .body(result);
+    }
+
+    
+    /**
      * {@code GET  /countries} : get all the countries.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of countries in body.

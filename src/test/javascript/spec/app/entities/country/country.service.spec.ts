@@ -67,7 +67,7 @@ describe('Service Tests', () => {
 
         const expected = Object.assign({}, returnedFromService);
         service
-          .update(expected)
+          .update(3, expected)
           .pipe(take(1))
           .subscribe(resp => (expectedResult = resp));
         const req = httpMock.expectOne({ method: 'PUT' });

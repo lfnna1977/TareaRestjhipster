@@ -44,7 +44,7 @@ export class CountryUpdateComponent implements OnInit {
     this.isSaving = true;
     const country = this.createFromForm();
     if (country.id !== undefined) {
-      this.subscribeToSaveResponse(this.countryService.update(country));
+      this.subscribeToSaveResponse(this.countryService.update(country.id, country));
     } else {
       this.subscribeToSaveResponse(this.countryService.create(country));
     }

@@ -48,7 +48,7 @@ export class ClubUpdateComponent implements OnInit {
     this.isSaving = true;
     const club = this.createFromForm();
     if (club.id !== undefined) {
-      this.subscribeToSaveResponse(this.clubService.update(club));
+      this.subscribeToSaveResponse(this.clubService.update(club.id, club));
     } else {
       this.subscribeToSaveResponse(this.clubService.create(club));
     }

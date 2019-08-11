@@ -19,8 +19,8 @@ export class ClubService {
     return this.http.post<IClub>(this.resourceUrl, club, { observe: 'response' });
   }
 
-  update(club: IClub): Observable<EntityResponseType> {
-    return this.http.put<IClub>(this.resourceUrl, club, { observe: 'response' });
+  update(id: number, club: IClub): Observable<EntityResponseType> {
+    return this.http.put<IClub>(`${this.resourceUrl}/${id}`, club, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {

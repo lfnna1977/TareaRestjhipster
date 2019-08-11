@@ -19,8 +19,8 @@ export class PlayerService {
     return this.http.post<IPlayer>(this.resourceUrl, player, { observe: 'response' });
   }
 
-  update(player: IPlayer): Observable<EntityResponseType> {
-    return this.http.put<IPlayer>(this.resourceUrl, player, { observe: 'response' });
+  update(id: number, player: IPlayer): Observable<EntityResponseType> {
+    return this.http.put<IPlayer>(`${this.resourceUrl}/${id}`, player, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {

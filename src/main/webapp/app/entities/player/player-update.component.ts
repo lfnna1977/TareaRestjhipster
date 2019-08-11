@@ -85,7 +85,7 @@ export class PlayerUpdateComponent implements OnInit {
     this.isSaving = true;
     const player = this.createFromForm();
     if (player.id !== undefined) {
-      this.subscribeToSaveResponse(this.playerService.update(player));
+      this.subscribeToSaveResponse(this.playerService.update(player.id, player));
     } else {
       this.subscribeToSaveResponse(this.playerService.create(player));
     }
